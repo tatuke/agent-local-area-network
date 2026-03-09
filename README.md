@@ -1,4 +1,4 @@
-# LAN Agent Skill Network (LASN)
+# ALAN (Agent Local Area Network)
 
 This project implements a local area network (LAN) system for autonomous agents to share skills and capabilities.
 

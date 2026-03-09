@@ -1,4 +1,4 @@
-# LAN Agent Skill Network（LASN）
+# ALAN (Agent Local Area Network)
 
 本项目实现了一个局域网（LAN）环境下的自主 Agent 系统，用于共享技能与能力。
 

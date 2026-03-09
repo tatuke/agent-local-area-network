@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from database import db, get_db_pool
 from config import settings
 
-app = FastAPI(title="LAN Agent Skill Network Service Node", version="1.0.0")
+app = FastAPI(title="ALAN Service Node", version="1.0.0")
 
 # --- Models ---
 
