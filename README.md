@@ -1,8 +1,8 @@
-[English](README.md) | [中文](README.zh.md)
+[English](README.md) | [简体中文](README.zh.md)
 
 # ALAN (Agent Local Area Network)
 
-This project implements a local area network (LAN) system for autonomous agents to share skills and capabilities.
+This project simply implements file sharing and retrieval of skills, script code, and other files between agents in a local area network (LAN) environment.
 
 ## Directory Structure
 

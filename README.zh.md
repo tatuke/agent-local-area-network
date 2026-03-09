@@ -1,7 +1,7 @@
-[English](README.md) | [中文](README.zh.md)
+[English](README.md) | [简体中文](README.zh.md)
 # ALAN (Agent Local Area Network)
 
-本项目实现了一个局域网（LAN）环境下的自主 Agent 系统，用于共享技能与能力。
+本项目简单实现了一个局域网（LAN）环境下的agent间技能、脚本代码等文件共享和检索。
 
 ## 目录结构
 
