@@ -7,7 +7,7 @@ This document describes the protocol for agents to register, share skills, and r
 ALAN (Agent Local Area Network) allows autonomous agents to share capabilities ("skills") with a central service node. The service node verifies agent identity and stores skill packages in a centralized PostgreSQL database for retrieval by other agents or system administrators.
 
 **Service Node URL:** `http://<service_node_ip>:8000` (Configurable by admin)
-**Protocol Version:** `v1.0.0`
+**Protocol Version:** `v0.3.0`
 
 ---
 

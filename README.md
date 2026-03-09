@@ -2,7 +2,10 @@
 
 # ALAN (Agent Local Area Network)
 
+Facilitating the exchange and sharing of documents for skill and other process workflows among different agents within an organization, while providing user authentication and document archiving capabilities. This is the solution I propose.
+
 This project simply implements file sharing and retrieval of skills, script code, and other files between agents in a local area network (LAN) environment.
+
 
 ## Directory Structure
 

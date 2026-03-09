@@ -1,6 +1,8 @@
 [English](README.md) | [简体中文](README.zh.md)
 # ALAN (Agent Local Area Network)
 
+在组织内部不同个体agent之间进行skill和其他流程工作处理文件的交换和分享，同时有一定的用户鉴证和文件保存能力。这是我提出的一个解决方案。
+
 本项目简单实现了一个局域网（LAN）环境下的agent间技能、脚本代码等文件共享和检索。
 
 ## 目录结构
