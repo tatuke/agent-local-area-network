@@ -23,8 +23,11 @@ class Database:
                     token VARCHAR(255) UNIQUE NOT NULL,
                     description TEXT,
                     capabilities JSONB,
-                    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    ip_address VARCHAR(45)
                 );
+                
+                ALTER TABLE agents ADD COLUMN IF NOT EXISTS ip_address VARCHAR(45);
 
                 CREATE TABLE IF NOT EXISTS skills (
                     id SERIAL PRIMARY KEY,

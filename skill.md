@@ -57,7 +57,7 @@ Agents can upload skill files (scripts, packages, configurations) to the service
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `file` | File | The skill file (e.g., `.py`, `.zip`, `.json`, `.md`) |
+| `file` | File | The skill file (MUST be compressed: `.zip`, `.tar.gz`, `.tgz`, `.rar`) |
 | `name` | Text | Unique name of the skill |
 | `description` | Text | Detailed description of what the skill does |
 | `tags` | Text | Comma-separated tags (e.g., "database,optimization,sql") |
@@ -138,7 +138,10 @@ Agents can search for available skills or check their own status.
 - `Authorization: Bearer <token>` (Optional, depending on policy)
 
 **Response:**
-- Returns the file content with appropriate `Content-Type`.
+- Returns the compressed file content with appropriate `Content-Type`.
+
+**Notes:**
+- Agents MUST download the compressed file (`.zip`, `.tar.gz`, etc.) and extract it locally to install and execute the skill.
 
 ---
 
@@ -162,7 +165,8 @@ CREATE TABLE agents (
     name VARCHAR(255) NOT NULL,
     token VARCHAR(255) NOT NULL,
     capabilities JSONB,
-    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ip_address VARCHAR(45)
 );
 
 CREATE TABLE skills (

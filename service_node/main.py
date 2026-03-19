@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Form, Depends, HTTPException, Header, status, Response
+from fastapi import FastAPI, UploadFile, File, Form, Depends, HTTPException, Header, status, Response, Request
 from fastapi.responses import JSONResponse, Response as FastAPIResponse
 from typing import List, Optional
 import uuid
@@ -82,23 +82,40 @@ async def shutdown():
 # --- Endpoints ---
 
 @app.post("/api/v1/register", response_model=AgentRegisterResponse)
-async def register_agent(payload: AgentRegisterRequest):
-    agent_id = f"agent_{uuid.uuid4().hex[:8]}"
-    token = f"sk_lan_{secrets.token_hex(16)}"
+async def register_agent(payload: AgentRegisterRequest, request: Request):
+    ip_address = request.client.host
     
     pool = await get_db_pool()
     async with pool.acquire() as conn:
         try:
+            # Check if IP already exists
+            existing_agent = await conn.fetchrow(
+                "SELECT agent_id, name, token FROM agents WHERE ip_address = $1", 
+                ip_address
+            )
+            
+            if existing_agent:
+                return AgentRegisterResponse(
+                    status="success",
+                    agent_id=existing_agent['agent_id'],
+                    token=existing_agent['token'],
+                    message=f"IP {ip_address} is already registered as agent '{existing_agent['name']}'. Returning existing registration info."
+                )
+
+            agent_id = f"agent_{uuid.uuid4().hex[:8]}"
+            token = f"sk_lan_{secrets.token_hex(16)}"
+            
             await conn.execute(
                 """
-                INSERT INTO agents (agent_id, name, token, description, capabilities)
-                VALUES ($1, $2, $3, $4, $5)
+                INSERT INTO agents (agent_id, name, token, description, capabilities, ip_address)
+                VALUES ($1, $2, $3, $4, $5, $6)
                 """,
                 agent_id,
                 payload.agent_name,
                 token,
                 payload.description,
-                json.dumps(payload.capabilities)
+                json.dumps(payload.capabilities),
+                ip_address
             )
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Registration failed: {str(e)}")
@@ -119,6 +136,12 @@ async def upload_skill(
     version: str = Form("1.0.0"),
     agent: dict = Depends(get_current_agent)
 ):
+    if not file.filename.endswith(('.zip', '.tar.gz', '.tgz', '.rar')):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only compressed files (.zip, .tar.gz, .tgz, .rar) are allowed."
+        )
+
     skill_id = f"skill_{uuid.uuid4().hex[:8]}"
     tag_list = [t.strip() for t in tags.split(",") if t.strip()]
     file_content = await file.read()
